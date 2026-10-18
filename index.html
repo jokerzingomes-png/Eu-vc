@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Um pedacinho de felicidade ✨</title>
+<meta name="theme-color" content="#0f0a24">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,400;1,9..144,500&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#0f0a24; --bg2:#1a1040;
+  --violet:#a98bff; --lilac:#d4c3ff; --orchid:#e6a9ff; --pink:#ffb8e6;
+  --text:#f6f0ff; --muted:#c3b6e0;
+  --serif:"Fraunces",Georgia,"Times New Roman",serif;
+  --sans:"Nunito",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{
+  background:linear-gradient(160deg,var(--bg1),var(--bg2));
+  color:var(--text);font-family:var(--sans);
+  overflow:hidden;position:relative;
+}
+/* Fundo */
+.blob{position:fixed;border-radius:50%;filter:blur(70px);opacity:.45;pointer-events:none;will-change:transform}
+.b1{width:46vmax;height:46vmax;background:#7b3fe4;top:-14vmax;left:-12vmax;animation:drift1 38s ease-in-out infinite alternate}
+.b2{width:38vmax;height:38vmax;background:#d048b8;bottom:-12vmax;right:-10vmax;animation:drift2 44s ease-in-out infinite alternate}
+.b3{width:34vmax;height:34vmax;background:#4a55e0;top:30%;left:48%;animation:drift3 50s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(14vw,12vh) scale(1.15)}}
+@keyframes drift2{to{transform:translate(-16vw,-10vh) scale(1.1)}}
+@keyframes drift3{to{transform:translate(-20vw,14vh) scale(.9)}}
+#stars{position:fixed;inset:0;pointer-events:none}
+.star{position:absolute;width:2px;height:2px;border-radius:50%;background:#fff;opacity:.15;animation:twinkle 4s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.1;transform:scale(.8)}50%{opacity:.95;transform:scale(1.4)}}
+
+/* Progresso */
+#progress{
+  position:fixed;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);
+  width:min(86vw,420px);display:flex;gap:5px;align-items:center;z-index:5;
+  opacity:0;transition:opacity .35s;
+}
+#progress.on{opacity:1}
+#progress i{flex:1;height:4px;border-radius:4px;background:rgba(212,195,255,.18);transition:all .4s}
+#progress i.done{background:var(--violet)}
+#progress i.now{background:var(--pink);flex:2.2;height:5px}
+
+/* Palco */
+main{
+  position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:center;
+  padding:clamp(56px,9vh,84px) 22px 32px;
+}
+.screen{
+  width:min(100%,640px);text-align:center;display:flex;flex-direction:column;align-items:center;gap:22px;
+  animation:enter .8s cubic-bezier(.2,.7,.2,1) both;
+}
+.screen.leave{animation:leave .35s ease forwards}
+@keyframes enter{from{opacity:0;transform:translateY(22px);filter:blur(10px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes leave{to{opacity:0;transform:translateY(-6px)}}
+
+.spark{font-size:clamp(3rem,12vw,4.5rem);animation:float 4.5s ease-in-out infinite;filter:drop-shadow(0 0 18px rgba(230,169,255,.6))}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+
+h1,h2{font-family:var(--serif);margin:0;line-height:1.1;font-weight:700}
+h1{font-size:clamp(2.4rem,9.5vw,4.4rem)}
+.grad{background:linear-gradient(120deg,#fff 0%,var(--lilac) 45%,var(--orchid) 100%);-webkit-background-clip:text;background-clip:text;color:transparent;-webkit-text-fill-color:transparent}
+.lead{font-size:clamp(1rem,3.6vw,1.2rem);line-height:1.65;color:var(--muted);max-width:30em;margin:0}
+.count{font-size:.85rem;color:var(--muted);letter-spacing:.06em}
+.quote{
+  font-family:var(--serif);font-style:italic;font-weight:400;
+  font-size:clamp(1.45rem,5.6vw,2.4rem);line-height:1.4;margin:0;
+  text-shadow:0 4px 28px rgba(140,90,255,.55);
+}
+.btn{
+  font-family:var(--sans);font-weight:700;font-size:1.02rem;color:#2a1650;
+  background:linear-gradient(135deg,var(--pink),var(--violet));
+  border:0;border-radius:999px;padding:14px 32px;cursor:pointer;
+  box-shadow:0 10px 28px rgba(169,139,255,.35);
+  transition:transform .25s,box-shadow .25s;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 14px 32px rgba(255,184,230,.4)}
+.btn:focus-visible,.ghost:focus-visible{outline:3px solid var(--lilac);outline-offset:4px}
+.btn:disabled{pointer-events:none}
+.ghost{
+  font-family:var(--sans);font-weight:600;font-size:.92rem;color:var(--muted);
+  background:transparent;border:1px solid rgba(212,195,255,.3);border-radius:999px;
+  padding:9px 22px;cursor:pointer;transition:color .25s,border-color .25s;
+}
+.ghost:hover{color:var(--text);border-color:var(--lilac)}
+
+/* Final */
+.final-text{
+  font-family:var(--serif);font-style:italic;font-size:clamp(1.2rem,4.6vw,1.7rem);line-height:1.55;
+  margin:0;text-shadow:0 4px 24px rgba(140,90,255,.5);
+  opacity:0;animation:enter 1.4s ease 1.3s both;
+}
+.rise{position:fixed;bottom:-40px;z-index:1;pointer-events:none;animation:rise linear forwards}
+@keyframes rise{
+  0%{opacity:0;transform:translateY(0) rotate(0)}
+  15%{opacity:.9}
+  100%{opacity:0;transform:translateY(-110vh) rotate(25deg)}
+}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;animation-delay:0s!important;transition-duration:.01ms!important}
+  .final-text{opacity:1}
+  .blob{display:none}
+}
+</style>
+</head>
+<body>
+<div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div>
+<div id="stars" aria-hidden="true"></div>
+<div id="progress" aria-hidden="true"></div>
+<main id="stage" aria-live="polite"></main>
+
+<script>
+// ✏️ ADICIONE AS FRASES AQUI: uma por linha, entre aspas e separadas por vírgula.
+const messages = [
+  // ----- Mensagem 1 -----
+  "Meu amor, eu queria que você pudesse se enxergar pelos meus olhos nem que fosse por alguns segundos, porque talvez assim você entendesse por que eu sou tão bobo por você. 🥹❤️",
+  "Às vezes eu fico pensando em como uma pessoa consegue mexer tanto comigo sem nem perceber. Você consegue me fazer sorrir com uma simples mensagem, melhorar meu dia só por estar nele e me deixar pensando em você até quando estou fazendo outras coisas. E o mais engraçado é que, quanto mais eu te conheço, mais eu encontro motivos pra gostar de você.",
+  "Eu não sei se consigo colocar em palavras tudo o que sinto, mas sei que você se tornou alguém muito especial pra mim. Não quero gostar de você só com palavras bonitas, quero te mostrar isso nas minhas atitudes, no meu cuidado, na minha atenção e em cada pequeno detalhe que fizer você perceber o quanto é importante pra mim.",
+  "E, sinceramente, se eu pudesse te dar alguma coisa agora, não seria flores, presentes ou qualquer coisa cara. Eu te daria a oportunidade de sentir por um instante tudo o que acontece dentro de mim quando penso em você. Acho que você ficaria sem palavras também. 🫶🏻",
+  "Eu não quero ser só alguém que diz que te ama, quero ser alguém que faz você sentir que é amada de verdade. Quero ser um dos motivos dos seus sorrisos, alguém com quem você possa ser você mesma, sem medo, sem precisar fingir nada. Porque, pra mim, você não precisa ser perfeita pra ser incrível. Você sendo você já tem algo que me encanta de um jeito que eu nem sei explicar.",
+  "E se você me perguntasse o que eu quero com você, eu não te daria uma resposta cheia de promessas impossíveis. Eu diria que quero continuar te conhecendo, descobrir cada detalhe seu, viver momentos que um dia vão virar lembranças lindas e fazer você perceber, aos pouquinhos, que o que sinto por você é sincero.",
+  "Eu só queria que você soubesse de uma coisa, minha menina: entre todas as mensagens que eu poderia escrever e todas as coisas bonitas que eu poderia dizer, existe uma verdade que nunca muda… eu fico feliz por ter você na minha vida, e se eu pudesse voltar ao começo de tudo, sabendo o quanto você se tornaria especial pra mim, eu escolheria conhecer você de novo, sem pensar duas vezes. ❤️🥹",
+
+  // ----- Mensagem 2 -----
+  "Meu amor, ❤️🥹 você não faz ideia do quanto eu sou feliz por poder te chamar de minha namorada. Às vezes eu paro e penso em como tive sorte de encontrar alguém como você, alguém que consegue mexer tanto comigo, me fazer sorrir igual um bobo e deixar meu coração quentinho só por existir na minha vida.",
+  "E vou te confessar uma coisa: eu posso até tentar bancar o sério, mas basta você aparecer que lá vai eu ficar todo bobo de novo. KKKKKKK 😭❤️ Você tem esse efeito em mim, menina! E o pior é que eu nem quero me curar disso, porque, se ser apaixonado por você significa sorrir à toa por causa de uma mensagem sua, então pode deixar que eu continuo assim mesmo. 🤏🏻💗",
+  "Mas, além de todas as brincadeiras, eu quero que você saiba que meu amor por você não está só nas declarações bonitas. Quero que esteja no jeito que te trato, na paciência que tenho com você, no cuidado que te dou e na vontade de melhorar sempre para que a gente construa algo lindo juntos.",
+  "Eu quero conhecer cada versão sua, comemorar suas conquistas, ouvir suas histórias, rir das suas besteiras e estar pertinho de você quando precisar de carinho. Não porque nosso namoro precisa ser perfeito, mas porque você merece alguém que esteja disposto a construir uma relação bonita, com amor, respeito, confiança e parceria.",
+  "E se eu pudesse escolher minha pessoa favorita nesse mundo inteiro, eu escolheria você, meu amor. Não porque você seja perfeita, mas porque é você. Porque é o seu sorriso que eu quero ver, o seu abraço que eu quero receber e é com você que eu quero criar lembranças que façam a gente sorrir até quando olhar para trás. 🥹💍",
+  "Eu te amo muito, minha menina. E espero que, mesmo depois de ler mil declarações minhas, você nunca se canse de descobrir o quanto é amada por mim. Porque eu ainda tenho muito carinho pra te dar, muitos sorrisos pra arrancar de você e muitos momentos lindos pra viver ao seu lado.",
+  "Agora vem cá, minha princesa… me explica como é que eu vou conseguir agir normalmente sabendo que tenho a namorada mais especial do meu mundinho inteiro? 😭❤️ KKKKKKK. Você é meu xodó, minha bobinha favorita e a dona de um coração que eu quero cuidar com todo o amor que existe em mim. EU TE AMO, MINHA MENINA! ❤️‍🩹🫶🏻💋",
+
+  
+];
+
+const stage = document.getElementById('stage');
+const progress = document.getElementById('progress');
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let locked = false, current = 'intro', index = 0, emojiTimer = null;
+
+// Estrelas
+(function(){
+  const box = document.getElementById('stars');
+  for (let i = 0; i < 60; i++) {
+    const s = document.createElement('span');
+    s.className = 'star';
+    s.style.left = Math.random()*100 + '%';
+    s.style.top = Math.random()*100 + '%';
+    s.style.animationDelay = (Math.random()*5).toFixed(2) + 's';
+    s.style.animationDuration = (2.5 + Math.random()*4).toFixed(2) + 's';
+    box.appendChild(s);
+  }
+})();
+
+function el(tag, cls, text){
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  if (text != null) e.textContent = text;
+  return e;
+}
+
+function setProgress(on){
+  progress.classList.toggle('on', on);
+  if (!on) return;
+  progress.innerHTML = '';
+  messages.forEach((_, i) => {
+    const t = document.createElement('i');
+    if (i < index) t.className = 'done';
+    else if (i === index) t.className = 'now';
+    progress.appendChild(t);
+  });
+}
+
+function stopEmojis(){ clearInterval(emojiTimer); emojiTimer = null; document.querySelectorAll('.rise').forEach(n => n.remove()); }
+
+function startEmojis(){
+  if (reduce) return;
+  const set = ['✨','💜','✦','🌟'];
+  const spawn = () => {
+    const e = el('span', 'rise', set[Math.floor(Math.random()*set.length)]);
+    e.style.left = (Math.random()*94) + 'vw';
+    e.style.fontSize = (16 + Math.random()*22) + 'px';
+    e.style.animationDuration = (7 + Math.random()*6) + 's';
+    document.body.appendChild(e);
+    setTimeout(() => e.remove(), 14000);
+  };
+  spawn();
+  emojiTimer = setInterval(spawn, 650);
+}
+
+function buildIntro(){
+  const s = el('section', 'screen');
+  s.appendChild(el('div', 'spark', '✨'));
+  const h = el('h1', 'grad', 'Oii, isrraylene meu amor');
+  s.appendChild(h);
+  s.appendChild(el('p', 'lead', 'Preparei algumas mensagens leves pra trazer um sorriso ao seu dia. Uma de cada vez, sem pressa. 💜'));
+  const b = el('button', 'btn', 'Começar');
+  b.type = 'button';
+  b.onclick = () => go(messages.length ? 'msg' : 'final', 0);
+  s.appendChild(b);
+  return {node: s, focus: b};
+}
+
+function buildMessage(){
+  const s = el('section', 'screen');
+  s.appendChild(el('div', 'count', (index + 1) + ' de ' + messages.length));
+  s.appendChild(el('p', 'quote', messages[index]));
+  const last = index === messages.length - 1;
+  const b = el('button', 'btn', last ? 'Terminar' : 'Próxima mensagem');
+  b.type = 'button';
+  b.onclick = () => last ? go('final') : go('msg', index + 1);
+  s.appendChild(b);
+  return {node: s, focus: b};
+}
+
+function buildFinal(){
+  const s = el('section', 'screen');
+  s.appendChild(el('h2', 'grad', 'FIM ✨')).style.fontSize = 'clamp(2.6rem,10vw,4.6rem)';
+  // A mensagem final só é criada aqui, quando a tela final é montada
+  s.appendChild(el('p', 'final-text', 'Fiz esse site só pra tira um sorriso seu e dizero quantovc e importantepra mim , espero que você goste! 💜'));
+  const b = el('button', 'ghost', 'Reler as mensagens');
+  b.type = 'button';
+  b.onclick = () => go('intro', 0);
+  s.appendChild(b);
+  return {node: s, focus: b};
+}
+
+function mount(){
+  stopEmojis();
+  let view;
+  if (current === 'intro') view = buildIntro();
+  else if (current === 'msg') view = buildMessage();
+  else view = buildFinal();
+  stage.innerHTML = '';
+  stage.appendChild(view.node);
+  setProgress(current === 'msg');
+  if (current === 'final') startEmojis();
+  view.focus.focus({preventScroll:true});
+}
+
+function go(target, i){
+  if (locked) return;
+  locked = true;
+  const old = stage.firstElementChild;
+  const swap = () => {
+    current = target;
+    if (typeof i === 'number') index = i;
+    mount();
+    locked = false;
+  };
+  if (old && !reduce) { old.classList.add('leave'); setTimeout(swap, 350); }
+  else swap();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'ArrowRight' || locked) return;
+  if (current === 'intro' || current === 'msg') {
+    const b = stage.querySelector('.btn');
+    if (b) b.click();
+  }
+});
+
+mount();
+</script>
+</body>
+</html>
